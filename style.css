@@ -1,0 +1,16 @@
+*{
+    font-family: 'Asap Condensed', sans-serif;
+}
+header{
+    text-align: center;
+    padding: 1rem;
+    font-size: 3rem;
+}
+#buttonBox{
+    display: flex;
+    justify-content: center;
+}
+
+label{
+    text-align: center;
+}
