@@ -11,6 +11,53 @@ header{
     justify-content: center;
 }
 
-label{
-    text-align: center;
+#star-container label, #price-container label {
+    float: right;
+    color: #969da8
 }
+#star-container input, #price-container input{
+    display: none;
+}
+#star-container label:before{
+    content: '★';
+    font-size: 3rem;
+    font-weight: 700;
+
+}
+#price-container  label:before{
+    content: '$';
+    font-size: 3rem;
+    font-weight: 700;
+
+}
+#star-container, #price-container{
+    display: flex;
+}
+#star-container input:checked ~label{
+    color: #ffd700
+}
+#price-container input:checked ~label{
+    color: #118c4f
+}
+
+#star-container:not(:checked) >div> label:hover,
+#star-container:not(:checked) >div> label:hover ~ label{
+    color: #ffd700
+}
+#price-container:not(:checked) >div> label:hover,
+#price-container:not(:checked) >div> label:hover ~ label{
+    color: #118c4f
+}
+
+#star-container input:checked >div> label:hover,
+#star-container input:checked >div> label:hover ~ label{
+    color: #ffd700
+}
+
+#price-container input:checked >div> label:hover,
+#price-container input:checked >div> label:hover ~ label{
+    color: #118c4f
+}
+
+
+

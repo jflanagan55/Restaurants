@@ -27,7 +27,7 @@
     </header>
     <div id="buttonBox">
       <button class="button is-link is-rounded is-large" id="triggerModal">
-        Add Restaurant
+        <a href="/new">Add a Restaurant</a>
       </button>
     </div>
 
@@ -144,6 +144,53 @@
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class= "field">
+                <fieldset>
+                    <legend>Your Rating</legend>
+                    <div id="star-container">
+                        <div class="control">
+                            <input type="radio" id="five-star" name="rating" value="5">
+                            <label for="five-star"></label>
+                        
+                        
+                            <input type="radio" id="four-star" name="rating" value="4">
+                            <label for="four-star"></label>
+                        
+                        
+                            <input type="radio" id="three-star" name="rating" value="3">
+                            <label for="three-star"></label>
+                        
+                            <input type="radio" id="two-star" name="rating" value="2">
+                            <label for="two-star"></label>
+                    
+                    
+                            <input type="radio" id="one-star" name="rating" value="1">
+                            <label for="one-star"></label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class= "field">
+                <fieldset>
+                    <legend>Price Point</legend>
+                    <div id="price-container">
+                        <div class="control">
+                            <input type="radio" id="three-dollar" name="pricing" value="3">
+                            <label for="three-dollar"></label>
+                        
+                            <input type="radio" id="two-dollar" name="pricing" value="2">
+                            <label for="two-dollar"></label>
+                    
+                    
+                            <input type="radio" id="one-dollar" name="pricing" value="1">
+                            <label for="one-dollar"></label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="field">
+                <textarea class="textarea is-info" rows= "4" placeholder="Info textarea"></textarea>
             </div>
           </form>
         </section>
