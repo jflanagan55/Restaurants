@@ -1,5 +1,6 @@
 const { ratingClasses } = require('@mui/material')
 const mongoose = require('mongoose')
+const {v4:uuid} = require('uuid')
 
 const restaurantSchema = new mongoose.Schema({
     resName:{
@@ -29,7 +30,8 @@ const restaurantSchema = new mongoose.Schema({
     notes:{
         type: String,
         
-    }
+    },
+   
 
 })
 

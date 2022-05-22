@@ -15,8 +15,8 @@ mongoose.connect('mongodb://localhost:27017/restaurants', {useNewUrlParser: true
 
 
 
-
-app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(__dirname + '/public'),)
+app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended:true}))
 
@@ -33,6 +33,13 @@ app.post('/', async (req, res)=>{
     await newRestaurant.save()
     res.redirect("/")
 })
+app.get('/:id/edit', async (req, res)=>{
+    const {id} = req.params;
+    const restaurant = await Restaurant.findById(id)
+    res.render('/edit', {restaurant})
+})
+
+
 app.listen(8080, ()=>{
     console.log('yeyey')
 })
