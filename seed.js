@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { v4: uuidv4 } = require('uuid');
 
 const Restaurant = require('./Restaurants')
 
@@ -50,7 +51,8 @@ const socialista = new Restaurant({
     state: "NY",
     cuisine: "other",
     rating: 5,
-    pricePoint: 3
+    pricePoint: 3,
+    _id: uuidv4()
 
 
 })
