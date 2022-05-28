@@ -77,6 +77,12 @@ main{
     justify-content: center;
     font-size: 1.8rem;
 }
+#deleteLink{
+    border: none;
+    background-color: white;
+    font-family: 'Asap Condensed', sans-serif;
+    font-size: 1.4rem;
+}
 
 #deleteLink:hover{
     background-color:red;

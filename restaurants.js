@@ -1,9 +1,9 @@
-const { ratingClasses } = require('@mui/material')
 const mongoose = require('mongoose')
+const {Schema} = mongoose;
 
 
 
-const restaurantSchema = new mongoose.Schema({
+const restaurantSchema = new Schema({
     resName:{
         type: String,
         required: true
@@ -32,6 +32,10 @@ const restaurantSchema = new mongoose.Schema({
         type: String,
         
     },
+    creator:[{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+        }]
 
 
 })

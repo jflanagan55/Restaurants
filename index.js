@@ -4,6 +4,7 @@ const path = require('path');
 const methodOverride = require('method-override')
 const mongoose = require('mongoose');
 const Restaurant = require('./restaurants');
+const User = require('./user');
 
 mongoose.connect('mongodb://localhost:27017/restaurants', {useNewUrlParser: true})
     .then(()=>{
@@ -30,6 +31,17 @@ app.get('/', async (req,res)=>{
 app.get('/new',(req, res)=>{
     res.render('new')
 })
+app.get('/register',(req, res)=>{
+    res.render('register')
+})
+app.post('/login', async(req, res)=>{
+    const newUser = new User(req.body)
+    await newUser.save()
+    res.redirect('/login');
+})
+app.get('/login',(req, res)=>{
+    res.render('login')
+})
 
 app.get('/:id', async(req,res)=>{
     const { id } = req.params;
@@ -54,6 +66,14 @@ app.put("/:id", async(req, res)=>{
     await Restaurant.findByIdAndUpdate(id, req.body, {runValidators:true})
     res.redirect('/')
 })
+app.delete("/:id", async(req,res)=>{
+    const {id} = req.params;
+    await Restaurant.findByIdAndDelete(id);
+    console.log('cool')
+    res.redirect('/');
+
+})
+
 
 
 app.listen(8080, ()=>{
