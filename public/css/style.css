@@ -113,3 +113,21 @@ main{
 #new-res-link{
     color: white;
 }
+#log-reg-card{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+#log-reg-container, .log-reg-main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(0.25turn, #3066BE, #d1e3dd, #F9C80E);
+}
+.user-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:1rem;
+}

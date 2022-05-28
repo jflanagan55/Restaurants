@@ -24,13 +24,14 @@ app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
 
 app.get('/', async (req,res)=>{
-    const restaurants = await Restaurant.find({})
-    res.render('index', {restaurants})
+    res.render('index')
+    // const restaurants = await Restaurant.find({})
+    // res.render('index', {restaurants})
 })
 
-app.get('/new',(req, res)=>{
-    res.render('new')
-})
+// app.get('/new',(req, res)=>{
+//     res.render('new')
+// })
 app.get('/register',(req, res)=>{
     res.render('register')
 })
@@ -43,36 +44,36 @@ app.get('/login',(req, res)=>{
     res.render('login')
 })
 
-app.get('/:id', async(req,res)=>{
-    const { id } = req.params;
-    const restaurant = await Restaurant.findById(id)
-    res.render('show', { restaurant })
-})
+// app.get('/:id', async(req,res)=>{
+//     const { id } = req.params;
+//     const restaurant = await Restaurant.findById(id)
+//     res.render('show', { restaurant })
+// })
 
 
-app.post('/', async (req, res)=>{
-    const newRestaurant = new Restaurant(req.body)
-    await newRestaurant.save()
-    res.redirect("/")
-})
-app.get('/:id/edit', async (req, res)=>{
-    const {id} = req.params;
-    const restaurant = await Restaurant.findById(id)
-    res.render('edit', {restaurant})
-})
+// app.post('/', async (req, res)=>{
+//     const newRestaurant = new Restaurant(req.body)
+//     await newRestaurant.save()
+//     res.redirect("/")
+// })
+// app.get('/:id/edit', async (req, res)=>{
+//     const {id} = req.params;
+//     const restaurant = await Restaurant.findById(id)
+//     res.render('edit', {restaurant})
+// })
 
-app.put("/:id", async(req, res)=>{
-    const {id} = req.params;
-    await Restaurant.findByIdAndUpdate(id, req.body, {runValidators:true})
-    res.redirect('/')
-})
-app.delete("/:id", async(req,res)=>{
-    const {id} = req.params;
-    await Restaurant.findByIdAndDelete(id);
-    console.log('cool')
-    res.redirect('/');
+// app.put("/:id", async(req, res)=>{
+//     const {id} = req.params;
+//     await Restaurant.findByIdAndUpdate(id, req.body, {runValidators:true})
+//     res.redirect('/')
+// })
+// app.delete("/:id", async(req,res)=>{
+//     const {id} = req.params;
+//     await Restaurant.findByIdAndDelete(id);
+//     console.log('cool')
+//     res.redirect('/');
 
-})
+// })
 
 
 

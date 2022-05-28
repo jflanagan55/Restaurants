@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       href="https://fonts.googleapis.com/css2?family=Asap+Condensed&display=swap"
       rel="stylesheet"
@@ -15,227 +15,27 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
-    <script src="index.js" type="text/js"></script>
-    <title>Restaurant Display</title>
-</head>
-<body>
-    <header>
-        <h1>Your Restaurants</h1>
-      </header>
-      <div id="buttonBox">
-        <button class="button is-link is-rounded is-large" id="triggerModal">
-            <a href="/new" id="new-res-link">Add a Restaurant</a>
-        </button>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main id="log-reg-container">
+      <div class="card">
+        <div class="card-content" id="log-reg-card">
+          <div class="content">
+            <form action="/register">
+              <p>Need to Sign Up?</p>
+              <button class="button is-success">Register</button>
+            </form>
+          </div>
+          <div class="content">
+            <form action="/login">
+              <p>Already have an account?</p>
+              <button class="button is-link">Login</button>
+            </form>
+          </div>
+        </div>
       </div>
-      <main>
-        <div>
-        <% for(let res of restaurants){ %>
-            <div class = "card">
-                <div class="card-header">
-                    <h2 class="card-header-title"><%= res.resName %></h2>
-                </div>
-                <div class="card-content">
-                    <div id="location-container">
-                        <span><%= res.city %>, </span>
-                        <span><%= res.state %></span>
-                    </div>
-                    <div id="rating-container">
-                        <span>Rating</span>
-                        <div><% for(let i = 0; i< res.rating; i++){ %>
-                                <span class="star-rating">★</span> 
-                            <% } %>  </div>
-                    </div>
-                    <div id="price-point-container">
-                        <span>Price Point</span>
-                        <div><% for(let i = 0; i< res.pricePoint; i++){ %>
-                          <span class="price-point">$</span> 
-                      <% } %> 
-                        </div>
-                    </div>
-                </div>
-                <footer class="card-footer">
-                    <a class="card-footer-item" id="editLink" href="<%=res._id%>/edit">Edit</a>
-            
-                    <form action="<%=res._id%>?_method=DELETE" method="POST" class ="card-footer-item">
-                      <button class="card-footer-item" id="deleteLink" >Delete</button>
-                    </form>
-                  
-                    <a class="card-footer-item" id="detailsLink" href="<%=res._id%>">More Details</a>
-
-                </footer>
-            </div>   
-            <% }  %> 
-    </div>
     </main>
-    <div class="modal">
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Restaurant Details</p>
-          <button class="delete" aria-label="close"></button>
-        </header>
-        <section class="modal-card-body">
-          <form>
-            <div class="field">
-              <label for="restaurant-name">Name</label>
-              <div class="control">
-                <input
-                  class="input is-info"
-                  type="text"
-                  placeholder="Info input"
-                  id="restaurant-name"
-                />
-              </div>
-            </div>
-            <div class="field is-grouped is-grouped-centered">
-              <div class="field">
-                <label for="city">City</label>
-                <div class="control">
-                  <input
-                    class="input is-info"
-                    type="text"
-                    placeholder="City"
-                    id="city"
-                  />
-                </div>
-              </div>
-              <div class="field">
-                <label for="state">State</label>
-                <div class="control">
-                  <div class="select is-info">
-                    <select name="state" id="state">
-                      <option value=""></option>
-                      <option value="AL">Alabama</option>
-                      <option value="AK">Alaska</option>
-                      <option value="AZ">Arizona</option>
-                      <option value="AR">Arkansas</option>
-                      <option value="CA">California</option>
-                      <option value="CO">Colorado</option>
-                      <option value="CT">Connecticut</option>
-                      <option value="DE">Delaware</option>
-                      <option value="DC">District Of Columbia</option>
-                      <option value="FL">Florida</option>
-                      <option value="GA">Georgia</option>
-                      <option value="HI">Hawaii</option>
-                      <option value="ID">Idaho</option>
-                      <option value="IL">Illinois</option>
-                      <option value="IN">Indiana</option>
-                      <option value="IA">Iowa</option>
-                      <option value="KS">Kansas</option>
-                      <option value="KY">Kentucky</option>
-                      <option value="LA">Louisiana</option>
-                      <option value="ME">Maine</option>
-                      <option value="MD">Maryland</option>
-                      <option value="MA">Massachusetts</option>
-                      <option value="MI">Michigan</option>
-                      <option value="MN">Minnesota</option>
-                      <option value="MS">Mississippi</option>
-                      <option value="MO">Missouri</option>
-                      <option value="MT">Montana</option>
-                      <option value="NE">Nebraska</option>
-                      <option value="NV">Nevada</option>
-                      <option value="NH">New Hampshire</option>
-                      <option value="NJ">New Jersey</option>
-                      <option value="NM">New Mexico</option>
-                      <option value="NY">New York</option>
-                      <option value="NC">North Carolina</option>
-                      <option value="ND">North Dakota</option>
-                      <option value="OH">Ohio</option>
-                      <option value="OK">Oklahoma</option>
-                      <option value="OR">Oregon</option>
-                      <option value="PA">Pennsylvania</option>
-                      <option value="RI">Rhode Island</option>
-                      <option value="SC">South Carolina</option>
-                      <option value="SD">South Dakota</option>
-                      <option value="TN">Tennessee</option>
-                      <option value="TX">Texas</option>
-                      <option value="UT">Utah</option>
-                      <option value="VT">Vermont</option>
-                      <option value="VA">Virginia</option>
-                      <option value="WA">Washington</option>
-                      <option value="WV">West Virginia</option>
-                      <option value="WI">Wisconsin</option>
-                      <option value="WY">Wyoming</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="field">
-                <label for="cuisine">Cuisine</label>
-                <div class="control">
-                    <div class="select is-info">
-                        <select name="cuisine" id="cuisine">
-                            <option value="italian">Italian</option>
-                            <option value="mexican">Mexican</option>
-                            <option value="greek">Greek</option>
-                            <option value="chinese">Chinese</option>
-                            <option value="japanese">Japanese</option>
-                            <option value="indian">Indian</option>
-                            <option value="thai">Thai</option>
-                            <option value="american">American</option>
-                            <option value="spanish">Spanish</option>
-                            <option value="french">French</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class= "field">
-                <fieldset>
-                    <legend>Your Rating</legend>
-                    <div id="star-container">
-                        <div class="control">
-                            <input type="radio" id="five-star" name="rating" value="5">
-                            <label for="five-star"></label>
-                        
-                        
-                            <input type="radio" id="four-star" name="rating" value="4">
-                            <label for="four-star"></label>
-                        
-                        
-                            <input type="radio" id="three-star" name="rating" value="3">
-                            <label for="three-star"></label>
-                        
-                            <input type="radio" id="two-star" name="rating" value="2">
-                            <label for="two-star"></label>
-                    
-                    
-                            <input type="radio" id="one-star" name="rating" value="1">
-                            <label for="one-star"></label>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class= "field">
-                <fieldset>
-                    <legend>Price Point</legend>
-                    <div id="price-container">
-                        <div class="control">
-                            <input type="radio" id="three-dollar" name="pricing" value="3">
-                            <label for="three-dollar"></label>
-                        
-                            <input type="radio" id="two-dollar" name="pricing" value="2">
-                            <label for="two-dollar"></label>
-                    
-                    
-                            <input type="radio" id="one-dollar" name="pricing" value="1">
-                            <label for="one-dollar"></label>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="field">
-                <textarea class="textarea is-info" rows= "4" placeholder="Info textarea"></textarea>
-            </div>
-          </form>
-        </section>
-        <footer class="modal-card-foot">
-          
-          <button class="button">Cancel</button>
-        </footer>
-      </div>
-    </div>
-</body>
+  </body>
 </html>

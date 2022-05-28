@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Asap+Condensed&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+      integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
     <title>Login</title>
-</head>
-<body>
-    <form action="/login" method="post">
-        <label for = "username">UserName</label>
-        <input type="text" id="username" name="username" />
-        <label for = "password">Password</label>
-        <input type="password" id="password" name="password" />
-        <label for = "email">Email</label>
-        <input type="email" id="email" name="email" />
-        <button>Register</button>
-
-    </form>
-    
-</body>
+  </head>
+  <body>
+    <main class="log-reg-main">
+      <div class="card">
+        <div class="card-content">
+          <form action="/login" method="post" class="user-form">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" class="input"/>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="input"/>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="input"/>
+            <button class="button is-success">Register</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
