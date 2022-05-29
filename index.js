@@ -5,6 +5,7 @@ const methodOverride = require('method-override')
 const mongoose = require('mongoose');
 const Restaurant = require('./restaurants');
 const User = require('./user');
+const bcrypt = require('bcrypt');
 
 mongoose.connect('mongodb://localhost:27017/restaurants', {useNewUrlParser: true})
     .then(()=>{
@@ -35,13 +36,34 @@ app.get('/', async (req,res)=>{
 app.get('/register',(req, res)=>{
     res.render('register')
 })
-app.post('/login', async(req, res)=>{
-    const newUser = new User(req.body)
-    await newUser.save()
+app.post('/register', async(req, res)=>{
+    const {username, password, email} = req.body;
+    const hashedPw = await bcrypt.hash(password, 12);
+    console.log(hashedPw)
+    const user = new User({
+        username,
+        password: hashedPw,
+        email
+    })
+    console.log(user)
+    await user.save()
     res.redirect('/login');
 })
 app.get('/login',(req, res)=>{
     res.render('login')
+})
+app.post('/login', async (req, res)=>{
+    const { username, password} = req.body;
+    const user = await User.findOne({username});
+    const userPassword = user.password;
+    const result = await bcrypt.compare(password, userPassword);
+    if(result){
+        console.log("match")
+    }
+    else{
+        console.log("no sir")
+    }
+
 })
 
 // app.get('/:id', async(req,res)=>{
