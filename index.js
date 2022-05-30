@@ -1,69 +1,83 @@
-const express = require('express')
+const express = require("express");
 const app = express();
-const path = require('path');
-const methodOverride = require('method-override')
-const mongoose = require('mongoose');
-const Restaurant = require('./restaurants');
-const User = require('./user');
-const bcrypt = require('bcrypt');
+const path = require("path");
+const methodOverride = require("method-override");
+const mongoose = require("mongoose");
+const Restaurant = require("./restaurants");
+const User = require("./user");
+const bcrypt = require("bcrypt");
+const session = require("express-session");
+const connectMongo = require("connect-mongo");
+const MongoStore = require("connect-mongo");
+const { findById } = require("./restaurants");
 
-mongoose.connect('mongodb://localhost:27017/restaurants', {useNewUrlParser: true})
-    .then(()=>{
-        console.log('we open')
-    })
-    .catch(err=>{
-        console.log("damn")
-        console.log(err)
-    })
+const dbString = "mongodb://localhost:27017/restaurants";
+mongoose
+  .connect(dbString, { useNewUrlParser: true })
+  .then(() => {
+    console.log("we open");
+  })
+  .catch((err) => {
+    console.log("damn");
+    console.log(err);
+  });
 
+app.use(express.static(__dirname + "/public"));
+app.set("views", path.join(__dirname, "/views"));
+app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.use(
+  session({
+    secret: "changelater",
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: dbString }),
+    cookie: {secure: true}
+  })
+);
+const requireAuth = (req, res, next) => {
+  if (!req.session.user_id) {
+    res.redirect("/login");
+  }
+  next();
+};
 
+app.get("/", async (req, res) => {
+  res.render("index");
+});
 
-app.use(express.static(__dirname + '/public'),)
-app.set('views', path.join(__dirname, '/views'));
-app.set('view engine', 'ejs')
-app.use(express.urlencoded({extended:true}))
-app.use(methodOverride('_method'))
-
-app.get('/', async (req,res)=>{
-    res.render('index')
-    // const restaurants = await Restaurant.find({})
-    // res.render('index', {restaurants})
-})
-
-// app.get('/new',(req, res)=>{
-//     res.render('new')
-// })
-app.get('/register',(req, res)=>{
-    res.render('register')
-})
-app.post('/register', async(req, res)=>{
-    const {username, password, email} = req.body;
-    const hashedPw = await bcrypt.hash(password, 12);
-    console.log(hashedPw)
-    const user = new User({
-        username,
-        password: hashedPw,
-        email
-    })
-    console.log(user)
-    await user.save()
-    res.redirect('/login');
-})
-app.get('/login',(req, res)=>{
-    res.render('login')
-})
-app.post('/login', async (req, res)=>{
-    const { username, password} = req.body;
-    const user = await User.findOne({username});
-    const userPassword = user.password;
-    const result = await bcrypt.compare(password, userPassword);
-    if(result){
-        console.log("match")
-    }
-    else{
-        console.log("no sir")
-    }
-
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+app.post("/register", async (req, res) => {
+  const { username, password, email } = req.body;
+  const user = new User({ username, password, email });
+  await user.save();
+  res.redirect("/login");
+});
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  const validUser = await User.validateUser(username, password);
+  if (validUser) {
+    req.session.user_id = validUser._id;
+    const id = validUser._id;
+    res.redirect(`/${id}/restaurants`);
+  } else {
+    console.log("no sir");
+  }
+});
+app.get("/:id/restaurants", requireAuth, async (req, res) => {
+    const {id} = req.params;
+    const user = await User.findById(id);
+    const restaurants = user.restaurants
+    res.render('restaurants', {restaurants, id})
+});
+app.get('/:id/restaurants/new',(req, res)=>{
+    res.render('new')
 })
 
 // app.get('/:id', async(req,res)=>{
@@ -72,12 +86,22 @@ app.post('/login', async (req, res)=>{
 //     res.render('show', { restaurant })
 // })
 
-
-// app.post('/', async (req, res)=>{
-//     const newRestaurant = new Restaurant(req.body)
-//     await newRestaurant.save()
-//     res.redirect("/")
-// })
+app.post('/test', async (req, res)=>{
+    const id = req.session.user_id;
+    const user = await User.findById(id);
+    const restaurants = user.restaurants;
+    const newRestaurant = new Restaurant(req.body)
+    await newRestaurant.save()
+    restaurants.push(newRestaurant)
+    await user.save()
+    res.redirect(`/${id}/restaurants`)
+    // const {id} = req.params;
+    // const user = await User.findById(id);
+    // const restaurants = user.restaurants
+    // const newRestaurant = new Restaurant(req.body)
+    // await newRestaurant.save()
+    // res.redirect("/")
+})
 // app.get('/:id/edit', async (req, res)=>{
 //     const {id} = req.params;
 //     const restaurant = await Restaurant.findById(id)
@@ -97,19 +121,9 @@ app.post('/login', async (req, res)=>{
 
 // })
 
-
-
-app.listen(8080, ()=>{
-    console.log('yeyey')
-})
-
-
-
-
-
-
-
-
+app.listen(8080, () => {
+  console.log("yeyey");
+});
 
 // const openModal = document.querySelector("#triggerModal");
 // const modal = document.querySelector(".modal");

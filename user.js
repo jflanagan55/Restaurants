@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const { Schema } = mongoose;
 
@@ -23,5 +24,14 @@ const userSchema = new Schema({
         }]
 
 
+})
+
+userSchema.statics.validateUser = async function(username, password){
+    const validUser = await this.findOne({username})
+    const validate = await bcrypt.compare(password, validUser.password)
+    return validate? validUser: false;
+}
+userSchema.pre('save',async function(next){
+    this.password =await  bcrypt.hash(this.password, 12) 
 })
 module.exports = mongoose.model('User', userSchema);

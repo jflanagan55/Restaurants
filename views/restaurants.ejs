@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Asap+Condensed&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+      integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <script src="index.js" type="text/js"></script>
+    <title>Restaurant Display</title>
+  </head>
+  <body>
+    <header>
+      <h1>Your Restaurants</h1>
+    </header>
+    <div id="buttonBox">
+      <button class="button is-link is-rounded is-large">
+        <a href="/<%= id %>/restaurants/new" id="new-res-link">Add a Restaurant</a>
+      </button>
+    </div>
+    <main>
+      <div>
+        <% for(let res of restaurants){ %>
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-header-title"><%= res.resName %></h2>
+            </div>
+            <div class="card-content">
+              <div id="location-container">
+                <span><%= res.city %>, </span>
+                <span><%= res.state %></span>
+              </div>
+              <div id="rating-container">
+                <span>Rating</span>
+                <div>
+                  <% for(let i = 0; i< res.rating; i++){ %>
+                  <span class="star-rating">★</span>
+                  <% } %>
+                </div>
+              </div>
+              <div id="price-point-container">
+                <span>Price Point</span>
+                <div>
+                  <% for(let i = 0; i< res.pricePoint; i++){ %>
+                  <span class="price-point">$</span>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a class="card-footer-item" id="editLink" href="<%=res._id%>/edit"
+                >Edit</a
+              >
+  
+              <form
+                action="<%=res._id%>?_method=DELETE"
+                method="POST"
+                class="card-footer-item"
+              >
+                <button class="card-footer-item" id="deleteLink">Delete</button>
+              </form>
+  
+              <a class="card-footer-item" id="detailsLink" href="<%=res._id%>"
+                >More Details</a
+              >
+            </footer>
+          </div>
+         <% } %>
+
+      </div>
+    </main>
