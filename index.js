@@ -9,7 +9,6 @@ const bcrypt = require("bcrypt");
 const session = require("express-session");
 const connectMongo = require("connect-mongo");
 const MongoStore = require("connect-mongo");
-const { findById } = require("./restaurants");
 
 const dbString = "mongodb://localhost:27017/restaurants";
 mongoose
@@ -31,7 +30,7 @@ app.use(
   session({
     secret: "changelater",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: dbString }),
     cookie: {secure: true}
   })
@@ -52,17 +51,23 @@ app.get("/register", (req, res) => {
 });
 app.post("/register", async (req, res) => {
   const { username, password, email } = req.body;
-  const user = new User({ username, password, email });
-  await user.save();
-  res.redirect("/login");
+   const hashedPw = await bcrypt.hash(password, 12,)
+ 
+const user = new User({ 
+    username, 
+    password: hashedPw,
+    email});
+await user.save();
+res.redirect("/login");
 });
 app.get("/login", (req, res) => {
   res.render("login");
 });
 app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-  const validUser = await User.validateUser(username, password);
-  if (validUser) {
+    const { username, password } = req.body;
+    const validUser = await User.findOne({username})
+    const validate = await bcrypt.compare(password, validUser.password)
+  if (validate) {
     req.session.user_id = validUser._id;
     const id = validUser._id;
     res.redirect(`/${id}/restaurants`);
@@ -73,8 +78,14 @@ app.post("/login", async (req, res) => {
 app.get("/:id/restaurants", requireAuth, async (req, res) => {
     const {id} = req.params;
     const user = await User.findById(id);
-    const restaurants = user.restaurants
-    res.render('restaurants', {restaurants, id})
+    let restaurant = [];
+    const ressies = user.restaurants;
+    for(let rest of ressies){
+        const found = await Restaurant.findById(rest);
+        restaurant.push(found);
+    }
+    console.log(restaurant)
+    res.render('restaurants', {restaurant})
 });
 app.get('/:id/restaurants/new',(req, res)=>{
     res.render('new')
@@ -89,12 +100,37 @@ app.get('/:id/restaurants/new',(req, res)=>{
 app.post('/test', async (req, res)=>{
     const id = req.session.user_id;
     const user = await User.findById(id);
-    const restaurants = user.restaurants;
-    const newRestaurant = new Restaurant(req.body)
+    const{resName, city, state, cuisine, rating, pricePoint, notes} = req.body;
+    const newRestaurant = new Restaurant({
+        resName,
+        city,
+        state,
+        cuisine,
+        rating,
+        pricePoint,
+        notes,
+        creator: id
+
+    });
     await newRestaurant.save()
-    restaurants.push(newRestaurant)
-    await user.save()
+    user.restaurants.push(newRestaurant);
+    await user.save();
     res.redirect(`/${id}/restaurants`)
+
+    
+
+
+
+
+    // const restaurants = user.restaurants;
+    // const newRestaurant = new Restaurant(req.body)
+    // await newRestaurant.save()
+    // restaurants.push(newRestaurant)
+    // await user.save()
+    // res.redirect(`/${id}/restaurants`)
+
+
+
     // const {id} = req.params;
     // const user = await User.findById(id);
     // const restaurants = user.restaurants

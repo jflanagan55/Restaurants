@@ -32,10 +32,10 @@ const restaurantSchema = new Schema({
         type: String,
         
     },
-    creator:[{
+    creator:{
         type: Schema.Types.ObjectId,
         ref: "User"
-        }]
+        }
 
 
 })

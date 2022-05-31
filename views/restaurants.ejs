@@ -25,15 +25,17 @@
     </header>
     <div id="buttonBox">
       <button class="button is-link is-rounded is-large">
-        <a href="/<%= id %>/restaurants/new" id="new-res-link">Add a Restaurant</a>
+        <a href="/<%=restaurant.creator%>/restaurants/new" id="new-res-link">Add a Restaurant</a>
       </button>
     </div>
     <main>
       <div>
-        <% for(let res of restaurants){ %>
+        
+        <% for(let res of restaurant){ %>
+          <% if(res != null) {  break %>
           <div class="card">
             <div class="card-header">
-              <h2 class="card-header-title"><%= res.resName %></h2>
+              <h2 class="card-header-title"><%=res.resName %></h2>
             </div>
             <div class="card-content">
               <div id="location-container">
@@ -78,4 +80,6 @@
          <% } %>
 
       </div>
+      <% } %>
+
     </main>
