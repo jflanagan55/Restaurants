@@ -69,14 +69,14 @@ app.post("/login", async (req, res) => {
     const validate = await bcrypt.compare(password, validUser.password)
   if (validate) {
     req.session.user_id = validUser._id;
-    const id = validUser._id;
-    res.redirect(`/${id}/restaurants`);
+    // const id = validUser._id;
+    res.redirect(`/${req.session.user_id}/restaurants`);
   } else {
     console.log("no sir");
   }
 });
 app.get("/:id/restaurants", requireAuth, async (req, res) => {
-    const {id} = req.params;
+    const id = req.session.user_id;
     const user = await User.findById(id);
     let restaurant = [];
     const ressies = user.restaurants;
@@ -85,7 +85,7 @@ app.get("/:id/restaurants", requireAuth, async (req, res) => {
         restaurant.push(found);
     }
     console.log(restaurant)
-    res.render('restaurants', {restaurant})
+    res.render('restaurants', {id , restaurant})
 });
 app.get('/:id/restaurants/new',(req, res)=>{
     res.render('new')
