@@ -25,17 +25,15 @@
     </header>
     <div id="buttonBox">
       <button class="button is-link is-rounded is-large">
-        <a href="/<%=id%>/restaurants/new" id="new-res-link">Add a Restaurant</a>
+        <a href="/<%=data.id%>/restaurants/new" id="new-res-link">Add a Restaurant</a>
       </button>
     </div>
     <main>
       <div>
-        
-        <% for(let res of restaurant){ %>
-          <% if(res != null) {  break %>
+        <% for(let res of data.restaurant){ %>
           <div class="card">
             <div class="card-header">
-              <h2 class="card-header-title"><%=res.resName %></h2>
+              <h2 class="card-header-title"><%=res.resName%></h2>
             </div>
             <div class="card-content">
               <div id="location-container">
@@ -65,10 +63,11 @@
               >
   
               <form
-                action="<%=res._id%>?_method=DELETE"
+                action="/delete?_method=delete"
                 method="POST"
                 class="card-footer-item"
               >
+              <input name = "resId" type="hidden" value="<%=res._id%>"/>
                 <button class="card-footer-item" id="deleteLink">Delete</button>
               </form>
   
@@ -77,9 +76,8 @@
               >
             </footer>
           </div>
-         <% } %>
-
+         <% } %>     
       </div>
-      <% } %>
+  
 
     </main>
