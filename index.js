@@ -10,6 +10,10 @@ const session = require("express-session");
 const connectMongo = require("connect-mongo");
 const MongoStore = require("connect-mongo");
 
+const cuisine = ["", "Italian", "Mexican", "Greek", "Chinese", "Japanese", "Indian", "Thai", "American", "Spanish", "French", "Other"]
+const states = ["", "AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MP", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UM", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"]
+
+
 const dbString = "mongodb://localhost:27017/restaurants";
 mongoose
   .connect(dbString, { useNewUrlParser: true })
@@ -87,12 +91,11 @@ app.get("/:id/restaurants", requireAuth, async (req, res) => {
         restaurant.push(found);
         
     }
-    console.log(restaurant)
     res.render('restaurants', {data:{restaurant, id}})
 });
 app.get('/:id/restaurants/new', requireAuth,(req, res)=>{
     const id = req.session.user_id;
-    res.render('new', {id})
+    res.render('new', {id, cuisine, states})
 })
 
 // app.get('/:id', async(req,res)=>{
@@ -128,17 +131,22 @@ app.post('/:id/restaurants', async (req, res)=>{
 //     res.render('edit', {restaurant})
 // })
 
-// app.put("/:id", async(req, res)=>{
-//     const {id} = req.params;
-//     await Restaurant.findByIdAndUpdate(id, req.body, {runValidators:true})
-//     res.redirect('/')
-// })
+app.get("/:id/restaurants/:id/edit", async(req, res)=>{
+    const {id} = req.params
+    const restaurant = await Restaurant.findById(id);
+    res.render('edit', {restaurant, cuisine, states})
+    
+
+    // 
+})
 
 app.delete("/delete", async(req,res)=>{
     const id = req.session.user_id;
     const {resId} = req.body;
+    await Restaurant.findByIdAndDelete(resId);
     const user = await User.findById(id);
     user.restaurants.pull(resId);
+    
     await user.save();
     res.redirect(`${id}/restaurants`)
 })
