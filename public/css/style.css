@@ -117,7 +117,7 @@ main{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
-#log-reg-container, .log-reg-main{
+#log-reg-container, .form-main{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -130,4 +130,8 @@ main{
     align-items: center;
     justify-content: center;
     gap:1rem;
+}
+
+#city{
+    padding-right: 1rem;
 }

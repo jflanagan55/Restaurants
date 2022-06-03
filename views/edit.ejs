@@ -19,14 +19,9 @@
     <title>Edit Restaurant</title>
   </head>
   <body>
-    <!-- <div class="modal">
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Restaurant Details</p>
-          <button class="delete" aria-label="close"></button>
-        </header>
-        <section class="modal-card-body"> -->
+    <main class="form-main add-edit-form" >
+      <div class="card">
+        <div class="card-content">
           <form action='' method="POST">
             <div class="field">
               <label for="restaurant-name">Name</label>
@@ -55,7 +50,7 @@
                   />
                 </div>
               </div>
-              <div class="field">
+              <div class="field mx-2">
                 <label for="state">State</label>
                 <div class="control">
                   <div class="select is-info">
@@ -67,20 +62,21 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="field">
-              <label for="cuisine">Cuisine</label>
-              <div class="control">
-                <div class="select is-info">
-                  <select name="cuisine" id="cuisine">
-                    <% for(type of cuisine) { %> 
-                      <option value="<%=type%>" <%= type===restaurant.cuisine? 'selected':'' %>><%=type%></option>
-                    <% } %>  
-                  </select>
+              <div class="field">
+                <label for="cuisine">Cuisine</label>
+                <div class="control">
+                  <div class="select is-info">
+                    <select name="cuisine" id="cuisine">
+                      <% for(type of cuisine) { %> 
+                        <option value="<%=type%>" <%= type===restaurant.cuisine? 'selected':'' %>><%=type%></option>
+                      <% } %>  
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="field">
+           
+            <div class="field is-grouped is-grouped-centered">
               <fieldset>
                 <legend>Your Rating</legend>
                 <div id="star-container">
@@ -130,7 +126,7 @@
                 </div>
               </fieldset>
             </div>
-            <div class="field">
+            <div class="field is-grouped is-grouped-centered">
               <fieldset>
                 <legend>Price Point</legend>
                 <div id="price-container">
@@ -175,11 +171,8 @@
             </div>
             <button class="button is-success">Save changes</button>
           </form>
-        <!-- </section>
-        <footer class="modal-card-foot">
-          <button class="button">Cancel</button>
-        </footer> -->
+        </div>
       </div>
-    </div>
+    </main>
   </body>
 </html>
