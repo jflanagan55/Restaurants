@@ -19,7 +19,7 @@
     <script src="index.js" type="text/js"></script>
     <title>Restaurant Display</title>
   </head>
-  <body>
+  <body id="restaurant-container">
     <header>
       <h1>Your Restaurants</h1>
     </header>
@@ -29,7 +29,7 @@
       </button>
     </div>
     <main>
-      <div>
+      <div class="container">
         <% for(let res of data.restaurant){ %>
           <div class="card">
             <div class="card-header">

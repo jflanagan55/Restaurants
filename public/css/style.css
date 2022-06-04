@@ -122,7 +122,7 @@ main{
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(0.25turn, #3066BE, #d1e3dd, #F9C80E);
+    background: linear-gradient(0.25turn, #66b2b2, #d1e3dd, #b6d0e2);
 }
 .user-form{
     display: flex;
@@ -131,7 +131,9 @@ main{
     justify-content: center;
     gap:1rem;
 }
+#restaurant-container{
+    background: linear-gradient(0.25turn, #66b2b2, #d1e3dd, #b6d0e2);
+    height: 100%;
 
-#city{
-    padding-right: 1rem;
+
 }

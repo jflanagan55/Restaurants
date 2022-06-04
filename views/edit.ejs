@@ -22,7 +22,7 @@
     <main class="form-main add-edit-form" >
       <div class="card">
         <div class="card-content">
-          <form action='' method="POST">
+          <form action="/<%=user_id%>/restaurants/<%=restaurant._id%>/edit?_method=put" method="POST">
             <div class="field">
               <label for="restaurant-name">Name</label>
               <div class="control">

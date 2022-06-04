@@ -125,20 +125,20 @@ app.post('/:id/restaurants', async (req, res)=>{
     res.redirect(`/${id}/restaurants`)
 
 })
-// app.get('/:id/edit', async (req, res)=>{
-//     const {id} = req.params;
-//     const restaurant = await Restaurant.findById(id)
-//     res.render('edit', {restaurant})
-// })
 
 app.get("/:id/restaurants/:id/edit", async(req, res)=>{
+    const user_id = req.session.user_id;
     const {id} = req.params
     const restaurant = await Restaurant.findById(id);
-    res.render('edit', {restaurant, cuisine, states})
-    
-
-    // 
+    res.render('edit', {restaurant, cuisine, states, user_id})
 })
+app.put("/:id/restaurants/:id/edit", async(req, res)=>{
+    const user_id = req.session.user_id;
+    const {id} = req.params;
+    const{resName, city, state, cuisine, rating, pricePoint, notes} = req.body;
+    const restaurant = await Restaurant.findByIdAndUpdate(id, {resName, city, state, cuisine, rating, pricePoint, notes})
+    res.redirect(`/${user_id}/restaurants`);
+    })
 
 app.delete("/delete", async(req,res)=>{
     const id = req.session.user_id;
