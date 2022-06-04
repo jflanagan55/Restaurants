@@ -23,7 +23,6 @@ const userSchema = new Schema({
         ref: "Restaurants"
         }]
 
-
 })
 
 // userSchema.pre('save',async function(next){

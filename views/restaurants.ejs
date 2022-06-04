@@ -22,28 +22,31 @@
   <body id="restaurant-container">
     <header>
       <h1>Your Restaurants</h1>
+      <form action="/logout" method="POST">
+        <button>Log out</button>
+      </form>
     </header>
     <div id="buttonBox">
       <button class="button is-link is-rounded is-large">
-        <a href="/<%=data.id%>/restaurants/new" id="new-res-link">Add a Restaurant</a>
+        <a href="/<%=id%>/restaurants/new" id="new-res-link">Add a Restaurant</a>
       </button>
     </div>
     <main>
       <div class="container">
-        <% for(let res of data.restaurant){ %>
+        <% for(let rest of restaurant){ %>
           <div class="card">
             <div class="card-header">
-              <h2 class="card-header-title"><%=res.resName%></h2>
+              <h2 class="card-header-title"><%=rest.resName%></h2>
             </div>
             <div class="card-content">
               <div id="location-container">
-                <span><%= res.city %>, </span>
-                <span><%= res.state %></span>
+                <span><%= rest.city %>, </span>
+                <span><%= rest.state %></span>
               </div>
               <div id="rating-container">
                 <span>Rating</span>
                 <div>
-                  <% for(let i = 0; i< res.rating; i++){ %>
+                  <% for(let i = 0; i< rest.rating; i++){ %>
                   <span class="star-rating">★</span>
                   <% } %>
                 </div>
@@ -51,23 +54,23 @@
               <div id="price-point-container">
                 <span>Price Point</span>
                 <div>
-                  <% for(let i = 0; i< res.pricePoint; i++){ %>
+                  <% for(let i = 0; i< rest.pricePoint; i++){ %>
                   <span class="price-point">$</span>
                   <% } %>
                 </div>
               </div>
             </div>
             <footer class="card-footer">
-              <a class="card-footer-item" id="editLink" href="/<%=data.id%>/restaurants/<%=res._id%>/edit"
+              <a class="card-footer-item" id="editLink" href="/<%=id%>/restaurants/<%=rest._id%>/edit"
                 >Edit</a
               >
   
               <form
-                action="/delete?_method=delete"
+                action="/delete/<%=rest._id%>?_method=delete"
                 method="POST"
                 class="card-footer-item"
               >
-              <input name = "resId" type="hidden" value="<%=res._id%>"/>
+              <input name = "resId" type="hidden" value="/<%=rest._id%>"/>
                 <button class="card-footer-item" id="deleteLink">Delete</button>
               </form>
   
@@ -81,3 +84,4 @@
   
 
     </main>
+    </body>

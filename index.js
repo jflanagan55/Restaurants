@@ -36,7 +36,6 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: dbString }),
-    cookie: {secure: true}
   })
 );
 // app.use(function(req,res,next){
@@ -44,7 +43,8 @@ app.use(
 // })
 const requireAuth = (req, res, next) => {
   if (!req.session.user_id) {
-    res.redirect("/login");
+    console.log("there is not id")
+    return res.redirect("/login");
   }
   next();
 };
@@ -74,13 +74,29 @@ app.post("/login", async (req, res) => {
     const { username, password } = req.body;
     const validUser = await User.findOne({username})
     const validate = await bcrypt.compare(password, validUser.password)
-  if (validate) {
+
+    if(!validate){
+      console.log("no sir")
+      return
+    }
     req.session.user_id = validUser._id;
-    res.redirect(`/${req.session.user_id}/restaurants`);
-  } else {
-    console.log("no sir");
-  }
-});
+    const homeURL = (`${req.session.user_id}/restaurants`)
+    res.redirect(homeURL);
+  });
+
+//   if (validate) {
+//     req.session.user_id = validUser._id;
+//     console.log(req.session.user_id)
+//     return res.redirect(`/${req.session.user_id}/restaurants`);
+//   } else {
+//     console.log("no sir");
+//   }
+// });
+
+// app.post('/logout',(req, res)=>{
+//   req.session.destroy();
+//   res.redirect('login');
+// })
 app.get("/:id/restaurants", requireAuth, async (req, res) => {
     const id = req.session.user_id;
     const user = await User.findById(id);
@@ -91,10 +107,15 @@ app.get("/:id/restaurants", requireAuth, async (req, res) => {
         restaurant.push(found);
         
     }
-    res.render('restaurants', {data:{restaurant, id}})
+    console.log("wow")
+    console.log(restaurant);
+    res.render('restaurants', {restaurant, id})
 });
-app.get('/:id/restaurants/new', requireAuth,(req, res)=>{
-    const id = req.session.user_id;
+
+
+
+app.get('/:id/restaurants/new', requireAuth, (req, res)=>{
+    const {id} = req.params
     res.render('new', {id, cuisine, states})
 })
 
@@ -104,10 +125,10 @@ app.get('/:id/restaurants/new', requireAuth,(req, res)=>{
 //     res.render('show', { restaurant })
 // })
 
-app.post('/:id/restaurants', async (req, res)=>{
+app.post('/:id/restaurants', requireAuth, async (req, res)=>{
     const id = req.session.user_id;
     const user = await User.findById(id);
-    const{resName, city, state, cuisine, rating, pricePoint, notes} = req.body;
+    const{resName, city, state, cuisine, rating, pricePoint, notes, _id} = req.body;
     const newRestaurant = new Restaurant({
         resName,
         city,
@@ -116,7 +137,9 @@ app.post('/:id/restaurants', async (req, res)=>{
         rating,
         pricePoint,
         notes,
-        creator: id
+        creator: id,
+        _id
+
 
     });
     await newRestaurant.save()
@@ -126,13 +149,13 @@ app.post('/:id/restaurants', async (req, res)=>{
 
 })
 
-app.get("/:id/restaurants/:id/edit", async(req, res)=>{
+app.get("/:id/restaurants/:id/edit", requireAuth, async(req, res)=>{
     const user_id = req.session.user_id;
     const {id} = req.params
     const restaurant = await Restaurant.findById(id);
     res.render('edit', {restaurant, cuisine, states, user_id})
 })
-app.put("/:id/restaurants/:id/edit", async(req, res)=>{
+app.put("/:id/restaurants/:id/edit", requireAuth, async(req, res)=>{
     const user_id = req.session.user_id;
     const {id} = req.params;
     const{resName, city, state, cuisine, rating, pricePoint, notes} = req.body;
@@ -140,31 +163,33 @@ app.put("/:id/restaurants/:id/edit", async(req, res)=>{
     res.redirect(`/${user_id}/restaurants`);
     })
 
-app.delete("/delete", async(req,res)=>{
-    const id = req.session.user_id;
-    const {resId} = req.body;
-    await Restaurant.findByIdAndDelete(resId);
-    const user = await User.findById(id);
-    user.restaurants.pull(resId);
-    
+app.delete("/delete/:id", requireAuth, async(req,res)=>{
+    const user_id = req.session.user_id
+    const {id} = req.params;
+    console.log(id)
+    console.log(user_id);
+    await Restaurant.findByIdAndDelete(id);
+    const user = await User.findById(user_id);
+    user.restaurants.pull(id);
     await user.save();
-    res.redirect(`${id}/restaurants`)
-})
+    res.redirect(`/${user_id}/restaurants`)     
+  })
+  app.post('/logout', (req,res)=>{
+    req.session.user_id = null;
+    res.redirect('/login');
+  })
+
+//     await Restaurant.findByIdAndDelete(resId);
+//     const user = await User.findById(id);
+//     user.restaurants.pull(resId);
+    
+//     await user.save();
+//     res.redirect(`/${id}/restaurants`)
+// })
+// app.all('*',(req,res)=>{
+//   res.render('unknown');
+// })
 
 app.listen(8080, () => {
   console.log("yeyey");
 });
-
-// const openModal = document.querySelector("#triggerModal");
-// const modal = document.querySelector(".modal");
-
-// openModal.addEventListener("click", () => {
-//   modal.classList.add("is-active");
-//   history.pushState(null, null, 'new');
-// });
-// function closeModal() {
-//   modal.classList.remove("is-active");
-// }
-
-// document.querySelector(".modal-background").addEventListener("click", closeModal);
-// document.querySelector(".delete").addEventListener("click", closeModal);
