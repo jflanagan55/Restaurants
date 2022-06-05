@@ -77,21 +77,20 @@ main{
     justify-content: center;
     font-size: 1.8rem;
 }
-#deleteLink{
+#delete-res-button{
     border: none;
     background-color: white;
     font-family: 'Asap Condensed', sans-serif;
     font-size: 1.4rem;
+    color:red;
+    cursor:pointer;
+}
+h1{
+    color:black
 }
 
-#deleteLink:hover{
-    background-color:red;
-    color:white;
-}
-#editLink:hover{
-    background-color:#15616d;
-    color:white;
-}
+
+
 .star-rating{
     color:gold;
     font-size: 2rem;
@@ -131,9 +130,30 @@ main{
     justify-content: center;
     gap:1rem;
 }
-#restaurant-container{
+#restaurant-container, #unknown-container{
     background: linear-gradient(0.25turn, #66b2b2, #d1e3dd, #b6d0e2);
-    height: 100%;
+    min-height: 100vh;
+    max-height:100%;
 
 
+}
+
+#logout-container{
+    text-align:right;
+}
+#unknown-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#page-not-found{
+    font-size:3rem;
+    color: black;
+}
+.restaurant-journal{
+    position: absolute;
+    top: 0;
+    font-size: 3rem;
+    padding-top:1rem;
 }

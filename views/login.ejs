@@ -20,9 +20,15 @@
   </head>
   <body>
     <main class="form-main">
+      <h1 class="restaurant-journal">Restaurant Journal</h1>
       <div class="card">
         <div class="card-content">
-          <form action="/login" method="POST" class="user-form">
+          <% if(messages.length) {%>
+            <div class="notification is-danger" id="error-message"> 
+            <%=messages%>
+          </div>
+            <% } %> 
+          <form action="/login" method="POST" class="user-form p-4">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" class="input"/>
             <label for="password">Password</label>

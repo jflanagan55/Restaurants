@@ -16,19 +16,28 @@
       referrerpolicy="no-referrer"
     />
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
-    <title>Login</title>
+    <title>Register</title>
   </head>
-  <body>
+  <body>  
     <main class="form-main">
+      <h1 class="restaurant-journal">Restaurant Journal</h1>
       <div class="card">
         <div class="card-content">
-          <form action="/register" method="POST" class="user-form">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" class="input"/>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="input"/>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="input"/>
+          <% if(messages.length) {%>
+            <div class="notification is-danger" id="error-message"> 
+            <%=messages%>
+          </div>
+            <% } %> 
+          <form action="/register" method="POST" class="user-form p-4">
+            <label for="username" >Username</label>
+            <input type="text" id="username" name="username" class="input" required/>
+            <label for="email" >Email</label>
+            <input type="email" id="email" name="email" class="input" required/>
+            <label for="password" >Password</label>
+            <input type="password" id="password" name="password" class="input" required/>
+            <label for="confirmPassword" >Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="input" required/>
+            
             <button class="button is-success">Register</button>
           </form>
         </div>
