@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Asap+Condensed&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+      integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Restaurant Details</title>
+  </head>
+  <body>
+    <main class="form-main add-edit-form" >
+      <div class="card">
+        <div class="card-content">
+            <div class="field is-grouped is-grouped-left">
+                <span class="details-line-header">Restaurant Name:</span> <p class="ml-2"><%=restaurant.resName%></p>
+            </div>
+            <div class="field is-grouped is-grouped-left">
+                <span class="details-line-header">Location:</span>    <p class="ml-2"><%=restaurant.city%>, <%=restaurant.state%></p>
+            </div>
+            <div class="field is-grouped is-grouped-left">
+              <span class="details-line-header">Cuisine:</span>  <p class="ml-2"><%=restaurant.cuisine%></p>
+            </div>        
+            
+            <div class="field is-grouped is-grouped-left">
+                    <span class="details-line-header">Your Rating:</span>
+               
+                <div class="ml-2">
+                <% for(let i=0;i<restaurant.rating;i++) {%> 
+                        <span class="star-rating">★</span>
+                    <% } %> 
+                </div>
+            </div>
+            <div class="field is-grouped is-grouped-left">
+                <span class="details-line-header">Price Point:</span>
+                <div class="ml-2">
+                    <% for(let i=0;i<restaurant.pricePoint;i++) {%> 
+                            <span class="price-point">$</span>
+                        <% } %> 
+                    </div>
+
+            </div>
+            
+            <div class="field is-grouped is-grouped-left">
+                <span class="details-line-header">Notes:</span>
+                <p class="ml-2">
+                   <%=restaurant.notes.length? `${restaurant.notes}` : "You did not leave any notes"  %> 
+                </p>
+            </div>
+            <button class="button is-success">Save changes</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

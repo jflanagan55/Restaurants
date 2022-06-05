@@ -43,10 +43,7 @@
             <h2 class="card-header-title"><%=rest.resName%></h2>
           </div>
           <div class="card-content">
-            <div id="location-container">
-              <span><%= rest.city %>, </span>
-              <span><%= rest.state %></span>
-            </div>
+        
             <div id="rating-container">
               <span>Rating</span>
               <div>
@@ -84,7 +81,7 @@
               </form>
             </div>
             <div class="card-footer-item" id="details-link">
-              <a href=""
+              <a href="/<%=id%>/restaurants/<%=rest._id%>/details"
               class="is-focused"
                 >More Details</a
               >

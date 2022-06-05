@@ -23,6 +23,11 @@
       <div class="card">
         <div class="card-content">
           <form action="/<%=user_id%>/restaurants/<%=restaurant._id%>/edit?_method=put" method="POST">
+            <% if(messages.length) {%>
+              <div class="notification is-danger p-2" id="error-message"> 
+              <%=messages%>
+            </div>
+              <% } %> 
             <div class="field">
               <label for="restaurant-name">Name</label>
               <div class="control">
@@ -33,6 +38,7 @@
                   id="restaurant-name"
                   name="resName"
                   value= "<%=restaurant.resName%>"
+                  required
                 />
               </div>
             </div>
@@ -47,6 +53,7 @@
                     id="city"
                     name="city"
                     value= "<%=restaurant.city%>"
+                    required
                   />
                 </div>
               </div>
@@ -54,7 +61,7 @@
                 <label for="state">State</label>
                 <div class="control">
                   <div class="select is-info">
-                    <select name="state" id="state">
+                    <select name="state" id="state" required>
                       <% for(let state of states) {%>
                         <option value="<%=state%>"<%= state === restaurant.state? 'selected':'' %> ><%=state%></option>
                       <% } %>  
@@ -66,7 +73,7 @@
                 <label for="cuisine">Cuisine</label>
                 <div class="control">
                   <div class="select is-info">
-                    <select name="cuisine" id="cuisine">
+                    <select name="cuisine" id="cuisine" required>
                       <% for(type of cuisine) { %> 
                         <option value="<%=type%>" <%= type===restaurant.cuisine? 'selected':'' %>><%=type%></option>
                       <% } %>  
@@ -165,7 +172,7 @@
               <textarea
                 class="textarea is-info"
                 rows="4"
-                placeholder="Info textarea"
+                placeholder="Any Notes..."
                 name="notes"
               ></textarea>
             </div>

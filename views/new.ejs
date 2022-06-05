@@ -23,6 +23,11 @@
         <div class="card">
           <div class="card-content">
           <form action="/<%=id%>/restaurants" method="POST">
+            <%  if(messages.length){%> 
+              <div class="notification is-danger p-2" id="error-message"> 
+                <%=messages%>
+                </div>
+            <% } %>  
             <div class="field">
               <label for="restaurant-name">Name</label>
               <div class="control">
@@ -32,6 +37,7 @@
                   placeholder="Info input"
                   id="restaurant-name"
                   name="resName"
+                  required
                 />
               </div>
             </div>
@@ -45,6 +51,7 @@
                     placeholder="City"
                     id="city"
                     name="city"
+                    required
                   />
                 </div>
               </div>
@@ -52,7 +59,7 @@
                 <label for="state">State</label>
                 <div class="control">
                   <div class="select is-info">
-                    <select name="state" id="state">
+                    <select name="state" id="state" required>
                       <% for(let state of states) {%>
                         <option value="<%=state%>"><%=state%></option>
                       <% } %>  
@@ -65,7 +72,7 @@
                 <label for="cuisine">Cuisine</label>
                 <div class="control">
                   <div class="select is-info">
-                    <select name="cuisine" id="cuisine">
+                    <select name="cuisine" id="cuisine" required>
                       <% for(type of cuisine) { %> 
                         <option value="<%=type%>"><%=type%></option>
                       <% } %>  
@@ -149,7 +156,7 @@
               <textarea
                 class="textarea is-info"
                 rows="4"
-                placeholder="Info textarea"
+                placeholder="Any Notes..."
                 name="notes"
               ></textarea>
             </div>

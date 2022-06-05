@@ -13,6 +13,7 @@ const flash = require('connect-flash');
 
 const cuisine = ["", "Italian", "Mexican", "Greek", "Chinese", "Japanese", "Indian", "Thai", "American", "Spanish", "French", "Other"]
 const states = ["", "AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MP", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UM", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"]
+const cityRegex = new RegExp(/^[A-z](?!.*--)(?!.*'')(?!.*\.\.)[A-z- '.]+[A-z]$/);
 
 
 const dbString = "mongodb://localhost:27017/restaurants";
@@ -125,7 +126,7 @@ app.get("/:id/restaurants", requireAuth, async (req, res) => {
 
 app.get('/:id/restaurants/new', requireAuth, (req, res)=>{
     const {id} = req.params
-    res.render('new', {id, cuisine, states})
+    res.render('new', {id, cuisine, states, messages: req.flash('error')})
 })
 
 app.get('/:id', async(req,res)=>{
@@ -138,6 +139,19 @@ app.post('/:id/restaurants', requireAuth, async (req, res)=>{
     const id = req.session.user_id;
     const user = await User.findById(id);
     const{resName, city, state, cuisine, rating, pricePoint, notes, _id} = req.body;
+    const cityTest = cityRegex.test(city);
+    if(cityTest ===false){
+      req.flash('error', 'Please enter a valid city')
+      return res.redirect('/id/restaurants/new');
+    }
+    if(pricePoint ===undefined){
+      req.flash('error', 'Please select a Price Point')
+      return res.redirect('/id/restaurants/new');
+    }
+    if(rating ===undefined){
+      req.flash('error', 'Please select a Rating')
+      return res.redirect('/id/restaurants/new');
+    }
     const newRestaurant = new Restaurant({
         resName,
         city,
@@ -162,16 +176,27 @@ app.get("/:id/restaurants/:id/edit", requireAuth, async(req, res)=>{
     const user_id = req.session.user_id;
     const {id} = req.params
     const restaurant = await Restaurant.findById(id);
-    res.render('edit', {restaurant, cuisine, states, user_id})
+    res.render('edit', {restaurant, cuisine, states, user_id, messages: req.flash('error')})
 })
 app.put("/:id/restaurants/:id/edit", requireAuth, async(req, res)=>{
     const user_id = req.session.user_id;
     const {id} = req.params;
     const{resName, city, state, cuisine, rating, pricePoint, notes} = req.body;
+    const cityTest = cityRegex.test(city);
+    if(cityTest === false){
+      req.flash('error','Please enter a valid city')
+      return res.redirect(`/${user_id}/restaurants/${id}/edit`)
+    }
     const restaurant = await Restaurant.findByIdAndUpdate(id, {resName, city, state, cuisine, rating, pricePoint, notes})
     res.redirect(`/${user_id}/restaurants`);
     })
-
+    app.get("/:id/restaurants/:id/details", requireAuth, async(req, res)=>{
+      const user_id = req.session.user_id;
+      const {id} = req.params
+      const restaurant = await Restaurant.findById(id);
+      res.render('details', {restaurant, cuisine, states, user_id})
+      console.log(restaurant.notes)
+  })
 app.delete("/delete/:id", requireAuth, async(req,res)=>{
     const user_id = req.session.user_id
     const {id} = req.params;

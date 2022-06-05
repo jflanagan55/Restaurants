@@ -157,3 +157,8 @@ h1{
     font-size: 3rem;
     padding-top:1rem;
 }
+
+.details-line-header{
+    color: black;
+    font-weight:700;
+}
