@@ -20,40 +20,41 @@
   </head>
   <body>
     <main class="form-main add-edit-form" >
-      <div class="card">
+      <div class="card" id="details-card">
         <div class="card-content">
             <div class="field is-grouped is-grouped-centered">
-                <span class="details-line-header">Restaurant Name:</span> <p class="ml-2"><%=restaurant.resName%></p>
+                <span class="details-line-header column is-half" id="name-text">Restaurant Name:</span> <p class="column is-half ml-2"><%=restaurant.resName%></p>
             </div>
             <div class="field is-grouped is-grouped-centered">
-                <span class="details-line-header">Location:</span>    <p class="ml-2"><%=restaurant.city%>, <%=restaurant.state%></p>
+                <span class="details-line-header column is-half" id="location-text">Location:</span>    <p class="column is-half ml-2"><%=restaurant.city%>, <%=restaurant.state%></p>
             </div>
             <div class="field is-grouped is-grouped-centered">
-              <span class="details-line-header">Cuisine:</span>  <p class="ml-2"><%=restaurant.cuisine%></p>
+              <span class="details-line-header column is-half" id="cuisine-text">Cuisine:</span>  <p class="column is-half ml-2"><%=restaurant.cuisine%></p>
             </div>        
             
             <div class="field is-grouped is-grouped-centered">
-                    <span class="details-line-header level-item" id="test">Your Rating:</span>
+                    <span class="details-line-header column is-half" id="rating-text">Your Rating:</span>
                
-                <div class="ml-2">
+                <div class="column is-half ml-2">
                 <% for(let i=0;i<restaurant.rating;i++) {%> 
                         <span class="star-rating">★</span>
                     <% } %> 
                 </div>
             </div>
             <div class="field is-grouped is-grouped-centered">
-                <span class="details-line-header level-item">Price Point:</span>
-                <div class="ml-2">
+                <span class="details-line-header column is-half" id="pricepoint-text">Price Point:</span>
+                <div class="column is-half ml-2">
                     <% for(let i=0;i<restaurant.pricePoint;i++) {%> 
                             <span class="price-point">$</span>
                         <% } %> 
                     </div>
 
             </div>
-            
             <div class="field is-grouped is-grouped-centered">
                 <span class="details-line-header">Notes:</span>
-                <p class="ml-2">
+            </div>
+            <div>
+                <p id="notes-container" class="column">
                    <%=restaurant.notes.length? `${restaurant.notes}` : "You did not leave any notes"  %> 
                 </p>
             </div>

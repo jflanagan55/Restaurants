@@ -60,17 +60,30 @@ app.get("/register", (req, res) => {
 app.post("/register", async (req, res) => {
   const { username, password, confirmPassword, email } = req.body;
   const usernameExists = await User.findOne({username});
+  const emailExists = await User.findOne({email});
+  const passwordRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/);
+  emailRegex = new RegExp (/^\S+@\S+\.\S+[a-z]$/);
+
   if(usernameExists){
     req.flash('error', 'Username is already in use')
     return res.redirect('/register')
   }
-  const emailExists = await User.findOne({email});
+  
   if(emailExists){
     req.flash('error', 'Email is already in use')
     return res.redirect('/register')
   }
   if(password !== confirmPassword){
     req.flash('error', 'Passwords do not match')
+    return res.redirect('/register')
+  }
+  
+  if(passwordRegex.test(password) === false){
+    req.flash('error', 'Password must be 8 characters long and contain a number, uppercase letter, and lowercase letter')
+    return res.redirect('/register')
+  }
+  if(emailRegex.test(email) === false){
+    req.flash('error', 'Please enter a valid email');
     return res.redirect('/register')
   }
   

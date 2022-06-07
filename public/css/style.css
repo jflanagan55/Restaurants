@@ -162,7 +162,22 @@ h1{
     color: black;
     font-weight:700;
 }
-#test{
+#pricepoint-text, #rating-text, #name-text, #location-text, #cuisine-text {
+    display: flex;
     align-items: center;
     justify-content: center;
+}
+#notes-container{
+    
+    word-wrap: break-word;
+    
+    
+} 
+#details-card{
+    overflow-y: auto;
+    max-width: 600px;
+}
+#edit-card, #new-card, #details-card{
+    max-height: 90%;
+    overflow-y: auto;
 }

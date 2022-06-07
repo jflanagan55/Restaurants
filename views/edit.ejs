@@ -20,7 +20,7 @@
   </head>
   <body>
     <main class="form-main add-edit-form" >
-      <div class="card">
+      <div class="card" id="edit-card">
         <div class="card-content">
           <form action="/<%=user_id%>/restaurants/<%=restaurant._id%>/edit?_method=put" method="POST">
             <% if(messages.length) {%>
