@@ -137,6 +137,9 @@ h1{
 
 
 }
+#restaurant-container h1{
+    margin-top: -2.5rem;
+}
 
 #logout-container{
     text-align:right;

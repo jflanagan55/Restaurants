@@ -21,18 +21,29 @@
   <body>
     <main class="form-main">
       <h1 class="restaurant-journal">Restaurant Journal</h1>
+      <div>
       <div class="card">
         <div class="card-content">
           <% if(messages.length) {%>
             <div class="notification is-danger p-2" id="error-message"> 
             <%=messages%>
           </div>
-            <% } %> 
+            <% } %>
+            <% if(success.length) {%>
+              <div class="notification is-primary p-2" id="success-message">
+              <%=success%>
+            </div>
+              <% } %>
+              <% if(authorize.length) {%>
+                <div class="notification is-danger p-2" id="error-message"> 
+                <%=authorize%>
+              </div>
+                <% } %>  
           <form action="/login" method="POST" class="user-form p-4">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" class="input"/>
+            <input type="text" id="username" name="username" class="input" required/>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="input"/>
+            <input type="password" id="password" name="password" class="input" required/>
             <button class="button is-success">Log in</button>
           </form>
         </div>
