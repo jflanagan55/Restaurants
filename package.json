@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  
+  "scripts": {
+    "start": "node index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jflanagan55/Restaurants.git"
@@ -27,7 +29,7 @@
     "passport": "^0.6.0",
     "uuid": "^8.3.2"
   },
-  "engines": {
+  "engines":{
     "node": "16.13.2"
   }
-}
+}  

@@ -11,6 +11,7 @@ const connectMongo = require("connect-mongo");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 require("dotenv").config();
+const port = process.env.PORT || 3000;
 const cuisine = [
   "",
   "Italian",
@@ -90,7 +91,7 @@ const cityRegex = new RegExp(
 );
 
 mongoose
-  .connect(process.env.DBSTRING, { useNewUrlParser: true })
+  .connect(process.env.DATABASE, { useNewUrlParser: true })
   .then(() => {
     console.log("we open");
   })
@@ -109,7 +110,7 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.DBSTRING }),
+    store: MongoStore.create({ mongoUrl: process.env.DATABASE }),
   })
 );
 app.use(flash());
@@ -307,6 +308,8 @@ app.all("*", (req, res) => {
   res.render("unknown");
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(port, () => {
   console.log("yeyey");
 });
+
+
