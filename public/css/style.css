@@ -1,15 +1,6 @@
 *{
     font-family: 'Asap Condensed', sans-serif;
 }
-header{
-    text-align: center;
-    padding: 1rem;
-    font-size: 3rem;
-}
-#buttonBox{
-    display: flex;
-    justify-content: center;
-}
 
 #star-container label, #price-container label {
     float: right;
@@ -58,16 +49,8 @@ header{
 #price-container input:checked >div> label:hover ~ label{
     color: #118c4f
 }
-main > div{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap:1rem;
-    
-}
-main{
-    padding:1rem;
-    
-}
+
+
 .card>*{
     text-align: center;
     font-size: 1.4rem;
@@ -96,10 +79,6 @@ h1{
     font-size: 2rem;
     font-weight: 700;
 }
-#rating-container, #price-point-container{
-    display: flex;
-    flex-direction: column;
-}
 .price-point{
     color:green;
     font-size: 2rem;
@@ -112,17 +91,7 @@ h1{
 #new-res-link{
     color: white;
 }
-#log-reg-card{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
-#log-reg-container, .form-main{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(0.25turn, #66b2b2, #d1e3dd, #b6d0e2);
-}
+ 
 .user-form{
     display: flex;
     flex-direction: column;
@@ -130,19 +99,13 @@ h1{
     justify-content: center;
     gap:1rem;
 }
-#restaurant-container, #unknown-container{
-    background: linear-gradient(0.25turn, #66b2b2, #d1e3dd, #b6d0e2);
-    min-height: 100vh;
-    max-height:100%;
 
 
-}
-#restaurant-container h1{
-    margin-top: -2.5rem;
-}
 
 #logout-container{
     text-align:right;
+    padding-right:0.5rem;
+    padding-top:0.5rem;
 }
 #unknown-container{
     display: flex;
@@ -153,12 +116,6 @@ h1{
 #page-not-found{
     font-size:3rem;
     color: black;
-}
-.restaurant-journal{
-    position: absolute;
-    top: 0;
-    font-size: 3rem;
-    padding-top:1rem;
 }
 
 .details-line-header{
@@ -171,10 +128,7 @@ h1{
     justify-content: center;
 }
 #notes-container{
-    
-    word-wrap: break-word;
-    
-    
+    word-wrap: break-word; 
 } 
 #details-card{
     overflow-y: auto;
@@ -183,4 +137,38 @@ h1{
 #edit-card, #new-card, #details-card{
     max-height: 90%;
     overflow-y: auto;
+}
+
+
+
+
+
+
+body{
+    background: linear-gradient(0.25turn, #66b2b2, #d1e3dd, #b6d0e2);
+    min-height: 100vh;
+    max-height: 100%;
+}
+#index-card, #register-card, #login-card, #new-card, #details-card, #edit-card{
+    max-width: 600px;
+    margin: auto;
+}
+
+#card-container div{
+    width: 380px;
+}
+#card-container{
+    gap:1.5rem;
+}
+#new-body, #details-body, #edit-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-footer-item:hover, #delete-res-button:hover{
+    color: black;
+    font-size:1.5rem;
+}
+.card-footer-item, #delete-res-button{
+    transition: color .1s ease-in-out, font-size .1s ease-in-out
 }

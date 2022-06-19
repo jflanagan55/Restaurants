@@ -3,14 +3,14 @@ const app = express();
 const path = require("path");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
-const Restaurant = require("./restaurants");
-const User = require("./user");
+const Restaurant = require("./models/restaurants");
+const User = require("./models/user");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const connectMongo = require("connect-mongo");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
-
+require("dotenv").config();
 const cuisine = [
   "",
   "Italian",
@@ -89,9 +89,8 @@ const cityRegex = new RegExp(
   /^[A-z](?!.*--)(?!.*'')(?!.*\.\.)[A-z- '.]+[A-z]$/
 );
 
-const dbString = "mongodb://localhost:27017/restaurants";
 mongoose
-  .connect(dbString, { useNewUrlParser: true })
+  .connect(process.env.DBSTRING, { useNewUrlParser: true })
   .then(() => {
     console.log("we open");
   })
@@ -107,17 +106,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(
   session({
-    secret: "changelater",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: dbString }),
+    store: MongoStore.create({ mongoUrl: process.env.DBSTRING }),
   })
 );
 app.use(flash());
 
 const requireAuth = (req, res, next) => {
   if (!req.session.user_id) {
-    req.flash('authorize', 'You must Sign in')
+    req.flash("authorize", "You must Sign in");
     return res.redirect("/login");
   }
   next();
@@ -173,12 +172,16 @@ app.post("/register", async (req, res) => {
     email,
   });
   await user.save();
-  req.flash('success', "Successfully made account, please sign in.")
+  req.flash("success", "Successfully made account, please sign in.");
   res.redirect("/login");
 });
 
 app.get("/login", (req, res) => {
-  res.render("login", { messages: req.flash("error"), success: req.flash('success'), authorize: req.flash('authorize') });
+  res.render("login", {
+    messages: req.flash("error"),
+    success: req.flash("success"),
+    authorize: req.flash("authorize"),
+  });
 });
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -206,8 +209,6 @@ app.get("/:id/restaurants", requireAuth, async (req, res) => {
     const found = await Restaurant.findById(rest);
     restaurant.push(found);
   }
-  console.log("wow");
-  console.log(restaurant);
   res.render("restaurants", { restaurant, id });
 });
 
@@ -288,13 +289,10 @@ app.get("/:id/restaurants/:id/details", requireAuth, async (req, res) => {
   const { id } = req.params;
   const restaurant = await Restaurant.findById(id);
   res.render("details", { restaurant, cuisine, states, user_id });
-  console.log(restaurant.notes);
 });
 app.delete("/delete/:id", requireAuth, async (req, res) => {
   const user_id = req.session.user_id;
   const { id } = req.params;
-  console.log(id);
-  console.log(user_id);
   await Restaurant.findByIdAndDelete(id);
   const user = await User.findById(user_id);
   user.restaurants.pull(id);
@@ -309,6 +307,6 @@ app.all("*", (req, res) => {
   res.render("unknown");
 });
 
-app.listen(8080, () => {
+app.listen(process.env.PORT, () => {
   console.log("yeyey");
 });
