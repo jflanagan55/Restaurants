@@ -23,7 +23,7 @@
     <header>
       <div id="logout-container">
         <form action="/logout" method="POST">
-          <button id="logout-button" class="button is-danger">Log out</button>
+          <button id="logout-button" class="button is-danger is-outlined is-rounded p-4">Log out</button>
         </form>
       </div>
       <h1 class="title is-1 has-text-centered">Your Restaurants</h1>
@@ -35,7 +35,7 @@
         >
       </button>
     </div>
-    <main>
+    <main style="display: flex; justify-content: center;">
       <div class="container is-flex is-justify-content-space-evenly is-flex-wrap-wrap" id="card-container">
         <% for(let rest of restaurant){ %>
         <div class="card">

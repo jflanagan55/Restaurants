@@ -28,7 +28,7 @@
               <%=messages%>
             </div>
               <% } %> 
-              <span>**For Price Point: $ = less than 20 per person, $$ = 20-50 per person, $$$ = 50+ per person**</span>
+              
 
             <div class="field">
               <label for="restaurant-name">Name</label>
@@ -36,7 +36,7 @@
                 <input
                   class="input is-info"
                   type="text"
-                  placeholder="Info input"
+                  placeholder="Restaurant Name"
                   id="restaurant-name"
                   name="resName"
                   value= "<%=restaurant.resName%>"
@@ -97,7 +97,7 @@
                       value="5"
                       <%=restaurant.rating===5?'checked':''  %> 
                     />
-                    <label for="five-star"></label>
+                    <label for="five-star" class="cursor-pointer"></label>
 
                     <input
                       type="radio"
@@ -106,7 +106,7 @@
                       value="4"
                        <%=restaurant.rating===4?'checked':''  %>
                     />
-                    <label for="four-star"></label>
+                    <label for="four-star" class="cursor-pointer"></label>
 
                     <input
                       type="radio"
@@ -115,14 +115,14 @@
                       value="3"
                       <%=restaurant.rating===3?'checked':''  %>
                     />
-                    <label for="three-star"></label>
+                    <label for="three-star" class="cursor-pointer"></label>
 
                     <input type="radio"
                       id="two-star"
                       name="rating"
                       value="2"
                       <%=restaurant.rating===2?'checked':''  %> />
-                    <label for="two-star"></label>
+                    <label for="two-star" class="cursor-pointer"></label>
 
                     <input type="radio"
                       id="one-star"
@@ -130,7 +130,7 @@
                       value="1"
                       <%=restaurant.rating===1?'checked':''  %> 
                        />
-                    <label for="one-star"></label>
+                    <label for="one-star" class="cursor-pointer"></label>
                   </div>
                 </div>
               </fieldset>
@@ -147,7 +147,7 @@
                       value="3"
                       <%=restaurant.pricePoint===3?'checked':''  %>
                     />
-                    <label for="three-dollar"></label>
+                    <label for="three-dollar" class="cursor-pointer"></label>
 
                     <input
                       type="radio"
@@ -165,11 +165,16 @@
                       value="1"
                       <%=restaurant.pricePoint===1?'checked':''  %>
                     />
-                    <label for="one-dollar"></label>
+                    <label for="one-dollar" class="cursor-pointer"></label>
                   </div>
                 </div>
               </fieldset>
             </div>
+            <div class="field" id = "pricePoint-details">
+              <div>$  | Under 20 per person</div>
+              <div>$$  | 20-50 per person</div>
+              <div>$$$  | Over 50 per person</div>
+              </div>
             <div class="field">
               <textarea
                 class="textarea is-info"
